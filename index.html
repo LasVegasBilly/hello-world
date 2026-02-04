@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova — A futuristic canvas for your personal development</title>
+    <meta name="description" content="A blank slate. No preconception, just space for your ideas to take shape.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888a0;
+            --accent: #6c5ce7;
+            --accent-glow: rgba(108, 92, 231, 0.3);
+            --accent-secondary: #a29bfe;
+            --border: rgba(255, 255, 255, 0.06);
+            --gradient-1: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            --gradient-2: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-logo svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(108, 92, 231, 0.1);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent-secondary);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(180deg, #ffffff 0%, #8888a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 2rem;
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 2rem;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .hero-preview {
+            margin-top: 4rem;
+            width: 100%;
+            max-width: 1000px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+            position: relative;
+        }
+
+        .preview-topbar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .preview-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .preview-dot.red { background: #ff5f57; }
+        .preview-dot.yellow { background: #febc2e; }
+        .preview-dot.green { background: #28c840; }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 1rem;
+            padding: 1.5rem;
+            min-height: 350px;
+        }
+
+        .preview-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            transition: border-color 0.3s;
+        }
+
+        .preview-card:hover {
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+
+        .preview-card.tall {
+            grid-row: span 2;
+        }
+
+        .preview-card h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .preview-card p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .preview-card .tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: rgba(108, 92, 231, 0.15);
+            color: var(--accent-secondary);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-top: 0.5rem;
+        }
+
+        .preview-card .bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+        }
+
+        .preview-card .bar-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--accent-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(108, 92, 231, 0.1);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            font-size: 1.25rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Showcase section */
+        .showcase {
+            background: var(--gradient-2);
+        }
+
+        .showcase-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .showcase-text h2 {
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .showcase-text p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .showcase-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .showcase-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .showcase-features li .check {
+            width: 20px;
+            height: 20px;
+            background: rgba(108, 92, 231, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .showcase-features li .check svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .showcase-visual {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .mini-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .mini-card .label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .mini-card .value {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .mini-card.wide {
+            grid-column: span 2;
+        }
+
+        .mini-card .sparkline {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 30px;
+            margin-top: 0.5rem;
+        }
+
+        .mini-card .sparkline .bar {
+            flex: 1;
+            background: var(--accent);
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        /* AI Section */
+        .ai-section {
+            text-align: center;
+        }
+
+        .ai-providers {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .ai-provider {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: border-color 0.3s;
+        }
+
+        .ai-provider:hover {
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+
+        .ai-provider .icon {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--accent-secondary);
+        }
+
+        .ai-provider span {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* Platforms */
+        .platforms {
+            text-align: center;
+            background: var(--bg-secondary);
+        }
+
+        .platform-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .platform-card {
+            padding: 2rem 3rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+
+        .platform-card svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .platform-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .platform-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Pricing */
+        .pricing {
+            text-align: center;
+        }
+
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            flex: 1;
+            min-width: 280px;
+            max-width: 380px;
+            padding: 2.5rem 2rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-align: left;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            position: relative;
+        }
+
+        .pricing-card.featured::before {
+            content: 'Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.25rem 1rem;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .pricing-card .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .pricing-card .price-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card ul li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .pricing-card ul li svg {
+            width: 16px;
+            height: 16px;
+            color: var(--accent-secondary);
+            flex-shrink: 0;
+        }
+
+        .pricing-card .btn-pricing {
+            display: block;
+            width: 100%;
+            padding: 0.85rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .pricing-card .btn-pricing:hover {
+            transform: translateY(-2px);
+        }
+
+        .pricing-card .btn-pricing.primary {
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+        }
+
+        .pricing-card .btn-pricing.secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 8rem 2rem;
+            position: relative;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .cta h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Grid animation */
+        .grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+
+            .showcase-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-card.tall {
+                grid-row: auto;
+            }
+
+            .platform-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pricing-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="#" class="nav-logo">
+            <svg viewBox="0 0 28 28" fill="none">
+                <rect width="28" height="28" rx="6" fill="url(#nav-grad)"/>
+                <path d="M8 14L14 8L20 14L14 20L8 14Z" fill="white" opacity="0.9"/>
+                <defs><linearGradient id="nav-grad" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#6c5ce7"/><stop offset="1" stop-color="#a29bfe"/></linearGradient></defs>
+            </svg>
+            Nova
+        </a>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#ai">AI</a></li>
+            <li><a href="#platforms">Platforms</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+        </ul>
+        <a href="#download" class="btn-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12L3 7h3V2h4v5h3L8 12z"/><path d="M2 14h12v1H2z"/></svg>
+            Download
+        </a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="grid-bg"></div>
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Now available on macOS, Windows & Linux
+        </div>
+        <h1>A futuristic canvas for your mind</h1>
+        <p>A blank slate. No preconception, just space for your ideas to take shape. Place anything anywhere and watch your thoughts come alive.</p>
+        <div class="hero-buttons">
+            <a href="#download" class="btn-primary">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12L3 7h3V2h4v5h3L8 12z"/><path d="M2 14h12v1H2z"/></svg>
+                Download Nova
+            </a>
+            <a href="#features" class="btn-secondary">Learn more</a>
+        </div>
+
+        <!-- App Preview -->
+        <div class="hero-preview">
+            <div class="preview-topbar">
+                <span class="preview-dot red"></span>
+                <span class="preview-dot yellow"></span>
+                <span class="preview-dot green"></span>
+            </div>
+            <div class="preview-grid">
+                <div class="preview-card tall">
+                    <h4>Project Roadmap</h4>
+                    <p>Q1 goals and milestones for the product launch. Keep track of progress across teams.</p>
+                    <div class="tag">In Progress</div>
+                    <div class="bar" style="margin-top:1rem"><div class="bar-fill" style="width:65%"></div></div>
+                </div>
+                <div class="preview-card">
+                    <h4>Quick Notes</h4>
+                    <p>Ideas captured throughout the day. Stream of consciousness, organized later.</p>
+                </div>
+                <div class="preview-card">
+                    <h4>Reading List</h4>
+                    <p>Articles and papers queued for deep work sessions.</p>
+                    <div class="tag">12 items</div>
+                </div>
+                <div class="preview-card" style="grid-column: span 2;">
+                    <h4>Weekly Review</h4>
+                    <p>Reflect on achievements, blockers, and plan the week ahead. Connected to Goals grid for context.</p>
+                    <div class="bar" style="margin-top:0.75rem"><div class="bar-fill" style="width:40%"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features">
+        <div class="section-header fade-in">
+            <div class="section-label">Features</div>
+            <h2>Everything you need, nothing you don't</h2>
+            <p>Nova gives you a spatial canvas that grows with your thinking. No rigid structures, just pure creative freedom.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a29bfe" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                </div>
+                <h3>The Grid</h3>
+                <p>Place anything anywhere. No folders, no hierarchy. Just space that expands as you think.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a29bfe" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="3"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="13" y2="13"/></svg>
+                </div>
+                <h3>Cards</h3>
+                <p>Containers for your thoughts. Resize them, move them. Each one holds a piece of what matters to you.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a29bfe" stroke-width="2"><rect x="2" y="2" width="8" height="8" rx="2"/><rect x="14" y="2" width="8" height="8" rx="2"/><rect x="8" y="14" width="8" height="8" rx="2"/><line x1="10" y1="6" x2="14" y2="6"/><line x1="12" y1="10" x2="12" y2="14"/></svg>
+                </div>
+                <h3>Multiple Grids</h3>
+                <p>Create unlimited workspaces for different contexts. Switch between them instantly.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a29bfe" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                </div>
+                <h3>Grid Links</h3>
+                <p>Navigate between grids seamlessly. Connect related concepts and build your personal knowledge web.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a29bfe" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </div>
+                <h3>Website Cards</h3>
+                <p>Follow a snippet of a website instead of refreshing every day. Keep what matters visible.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a29bfe" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>Privacy First</h3>
+                <p>Your data stays yours. Everything is stored locally on your device, or synced via iCloud or Google Drive.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase: Grid in Action -->
+    <section class="showcase fade-in">
+        <div class="showcase-content">
+            <div class="showcase-text">
+                <div class="section-label">The Grid</div>
+                <h2>Place anything anywhere</h2>
+                <p>No folders. No hierarchy. Just space that expands as you think. Nova's infinite canvas lets you organize information the way your brain naturally works.</p>
+                <ul class="showcase-features">
+                    <li>
+                        <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="#a29bfe" stroke-width="2"><polyline points="2 6 5 9 10 3"/></svg></span>
+                        Drag and drop cards freely on the grid
+                    </li>
+                    <li>
+                        <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="#a29bfe" stroke-width="2"><polyline points="2 6 5 9 10 3"/></svg></span>
+                        Resize cards to fit your content
+                    </li>
+                    <li>
+                        <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="#a29bfe" stroke-width="2"><polyline points="2 6 5 9 10 3"/></svg></span>
+                        Create multiple grids for different contexts
+                    </li>
+                    <li>
+                        <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="#a29bfe" stroke-width="2"><polyline points="2 6 5 9 10 3"/></svg></span>
+                        Link grids together for deeper navigation
+                    </li>
+                </ul>
+            </div>
+            <div class="showcase-visual">
+                <div class="mini-card">
+                    <div class="label">Active Grids</div>
+                    <div class="value">7</div>
+                </div>
+                <div class="mini-card">
+                    <div class="label">Total Cards</div>
+                    <div class="value">142</div>
+                </div>
+                <div class="mini-card wide">
+                    <div class="label">Activity This Week</div>
+                    <div class="sparkline">
+                        <div class="bar" style="height:40%"></div>
+                        <div class="bar" style="height:65%"></div>
+                        <div class="bar" style="height:50%"></div>
+                        <div class="bar" style="height:80%"></div>
+                        <div class="bar" style="height:95%"></div>
+                        <div class="bar" style="height:70%"></div>
+                        <div class="bar" style="height:85%"></div>
+                    </div>
+                </div>
+                <div class="mini-card wide">
+                    <div class="label">Recent: Project Roadmap, Reading List, Quick Notes, Weekly Review</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Section -->
+    <section id="ai" class="ai-section">
+        <div class="section-header fade-in">
+            <div class="section-label">AI Integration</div>
+            <h2>Intelligence that adapts to you</h2>
+            <p>Bring your own AI. Nova integrates with leading providers to give you context-aware assistance right inside your grids.</p>
+        </div>
+        <div class="ai-providers fade-in">
+            <div class="ai-provider">
+                <div class="icon">A</div>
+                <span>Anthropic</span>
+            </div>
+            <div class="ai-provider">
+                <div class="icon">O</div>
+                <span>OpenAI</span>
+            </div>
+            <div class="ai-provider">
+                <div class="icon">G</div>
+                <span>Google Gemini</span>
+            </div>
+            <div class="ai-provider">
+                <div class="icon">X</div>
+                <span>Grok</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platforms -->
+    <section id="platforms" class="platforms">
+        <div class="section-header fade-in">
+            <div class="section-label">Platforms</div>
+            <h2>Available everywhere you work</h2>
+            <p>Native apps for macOS, Windows, and Linux. Your grids sync seamlessly across all your devices.</p>
+        </div>
+        <div class="platform-cards fade-in">
+            <div class="platform-card">
+                <svg viewBox="0 0 48 48" fill="none">
+                    <path d="M38 24C38 16.268 31.732 10 24 10C16.268 10 10 16.268 10 24C10 31.732 16.268 38 24 38" stroke="#a29bfe" stroke-width="2"/>
+                    <path d="M24 10V24L34 34" stroke="#a29bfe" stroke-width="2"/>
+                </svg>
+                <h3>macOS</h3>
+                <p>Big Sur 11.0+</p>
+            </div>
+            <div class="platform-card">
+                <svg viewBox="0 0 48 48" fill="none">
+                    <rect x="10" y="10" width="28" height="28" rx="2" stroke="#a29bfe" stroke-width="2"/>
+                    <line x1="24" y1="10" x2="24" y2="38" stroke="#a29bfe" stroke-width="2"/>
+                    <line x1="10" y1="24" x2="38" y2="24" stroke="#a29bfe" stroke-width="2"/>
+                </svg>
+                <h3>Windows</h3>
+                <p>Windows 10+ (64-bit)</p>
+            </div>
+            <div class="platform-card">
+                <svg viewBox="0 0 48 48" fill="none">
+                    <circle cx="24" cy="24" r="14" stroke="#a29bfe" stroke-width="2"/>
+                    <circle cx="24" cy="24" r="4" fill="#a29bfe"/>
+                </svg>
+                <h3>Linux</h3>
+                <p>Ubuntu 20.04+, Debian 10+</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="pricing">
+        <div class="section-header fade-in">
+            <div class="section-label">Pricing</div>
+            <h2>Start free, upgrade when ready</h2>
+            <p>Nova is free to use. Unlock the full experience with Nova X.</p>
+        </div>
+        <div class="pricing-cards fade-in">
+            <div class="pricing-card">
+                <h3>Nova</h3>
+                <div class="price">Free</div>
+                <div class="price-desc">Everything you need to get started</div>
+                <ul>
+                    <li>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 6 11 13 4"/></svg>
+                        Unlimited grids
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 6 11 13 4"/></svg>
+                        Cards & grid links
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 6 11 13 4"/></svg>
+                        Local storage
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 6 11 13 4"/></svg>
+                        Dark & light themes
+                    </li>
+                </ul>
+                <a href="#download" class="btn-pricing secondary">Download Free</a>
+            </div>
+            <div class="pricing-card featured">
+                <h3>Nova X</h3>
+                <div class="price">$4.99 <span>/month</span></div>
+                <div class="price-desc">Turbocharge your Nova experience</div>
+                <ul>
+                    <li>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 6 11 13 4"/></svg>
+                        Everything in Nova
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 6 11 13 4"/></svg>
+                        AI integration (BYOK)
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 6 11 13 4"/></svg>
+                        Website cards
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 6 11 13 4"/></svg>
+                        Cloud sync (iCloud / Google Drive)
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 6 11 13 4"/></svg>
+                        Priority updates
+                    </li>
+                </ul>
+                <a href="#" class="btn-pricing primary">Get Nova X</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="download" class="cta">
+        <div class="grid-bg"></div>
+        <h2>Start building your canvas</h2>
+        <p>Download Nova and create your first grid in seconds. Free forever.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn-primary">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12L3 7h3V2h4v5h3L8 12z"/><path d="M2 14h12v1H2z"/></svg>
+                Download for macOS
+            </a>
+            <a href="#" class="btn-secondary">Other platforms</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <span class="footer-copy">&copy; 2026 Lightmode Laboratories</span>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">GitHub</a>
+                <a href="mailto:nova@lightmode.io">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Smooth parallax on hero grid background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const gridBgs = document.querySelectorAll('.grid-bg');
+            gridBgs.forEach(bg => {
+                bg.style.transform = `translateY(${scrolled * 0.3}px)`;
+            });
+        });
+    </script>
+
+</body>
+</html>
