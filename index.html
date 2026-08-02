@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coast to Coast — A Peaceful American Road Trip</title>
+  <link rel="stylesheet" href="/src/ui/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="scene"></canvas>
+
+    <div id="intro-screen">
+      <div class="intro-card">
+        <h1>Coast to Coast</h1>
+        <p class="subtitle">A peaceful drive across America on real interstate routes</p>
+        <p class="desc">
+          Follow real Interstate&nbsp;80 from San Francisco to New York City. Leave the pavement
+          whenever you like, roam the open country, and roll through towns whose fuel and goods
+          prices shift with a live regional economy &mdash; buy low in one state, sell high in the next.
+        </p>
+        <ul class="controls-list">
+          <li><b>W / &uarr;</b> accelerate &nbsp; <b>S / &darr;</b> brake &amp; reverse</li>
+          <li><b>A / D or &larr; / &rarr;</b> steer</li>
+          <li><b>Space</b> handbrake &nbsp; <b>M</b> open market near town</li>
+          <li><b>C</b> change camera &nbsp; <b>Esc</b> pause</li>
+        </ul>
+        <button id="start-btn">Start Driving</button>
+      </div>
+    </div>
+
+    <div id="hud" class="hidden"></div>
+    <div id="market" class="hidden"></div>
+    <div id="pause-overlay" class="hidden"></div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "us-road-trip",
+  "version": "1.0.0",
+  "description": "A peaceful 3D drive across the United States on real interstate routes, with a live regional economy.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:41729/git/LasVegasBilly/hello-world"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "vite": "^8.2.0"
+  }
+}
