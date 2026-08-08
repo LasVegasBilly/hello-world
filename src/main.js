@@ -80,6 +80,30 @@ document.getElementById('start-btn').addEventListener('click', () => {
   gameStarted = true;
 });
 
+// ---------- Touch controls (phones/tablets) ----------
+const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+const touchControls = document.getElementById('touch-controls');
+if (isTouchDevice) {
+  document.body.classList.add('touch-device');
+  touchControls.classList.remove('hidden');
+  document.getElementById('controls-keyboard').classList.add('hidden');
+  document.getElementById('controls-touch').classList.remove('hidden');
+  touchControls.querySelectorAll('.tc-btn').forEach(btn => {
+    const holdAction = btn.dataset.action;
+    const tapAction = btn.dataset.tap;
+    if (holdAction) {
+      const start = e => { e.preventDefault(); btn.classList.add('tc-active'); input.press(holdAction); };
+      const end = e => { e.preventDefault(); btn.classList.remove('tc-active'); input.release(holdAction); };
+      btn.addEventListener('pointerdown', start);
+      btn.addEventListener('pointerup', end);
+      btn.addEventListener('pointercancel', end);
+      btn.addEventListener('pointerleave', end);
+    } else if (tapAction) {
+      btn.addEventListener('pointerdown', e => { e.preventDefault(); input.tap(tapAction); });
+    }
+  });
+}
+
 function findNearTown(position) {
   let best = null;
   let bestDist = Infinity;

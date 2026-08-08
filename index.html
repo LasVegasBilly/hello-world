@@ -19,11 +19,15 @@
           whenever you like, roam the open country, and roll through towns whose fuel and goods
           prices shift with a live regional economy &mdash; buy low in one state, sell high in the next.
         </p>
-        <ul class="controls-list">
+        <ul class="controls-list" id="controls-keyboard">
           <li><b>W / &uarr;</b> accelerate &nbsp; <b>S / &darr;</b> brake &amp; reverse</li>
           <li><b>A / D or &larr; / &rarr;</b> steer</li>
           <li><b>Space</b> handbrake &nbsp; <b>M</b> open market near town</li>
           <li><b>C</b> change camera &nbsp; <b>Esc</b> pause</li>
+        </ul>
+        <ul class="controls-list hidden" id="controls-touch">
+          <li>On-screen <b>&larr; &rarr;</b> steer, <b>&uarr; &darr;</b> gas &amp; brake</li>
+          <li><b>$</b> open market near town &nbsp; <b>&#128247;</b> change camera</li>
         </ul>
         <button id="start-btn">Start Driving</button>
       </div>
@@ -32,6 +36,22 @@
     <div id="hud" class="hidden"></div>
     <div id="market" class="hidden"></div>
     <div id="pause-overlay" class="hidden"></div>
+
+    <div id="touch-controls" class="hidden">
+      <div class="tc-steer">
+        <button class="tc-btn tc-round" data-action="left" aria-label="Steer left">&larr;</button>
+        <button class="tc-btn tc-round" data-action="right" aria-label="Steer right">&rarr;</button>
+      </div>
+      <div class="tc-mid">
+        <button class="tc-btn tc-small" data-tap="camera" aria-label="Change camera">&#128247;</button>
+        <button class="tc-btn tc-small" data-tap="market" aria-label="Open market">$</button>
+        <button class="tc-btn tc-small" data-action="handbrake" aria-label="Handbrake">&#9209;</button>
+      </div>
+      <div class="tc-pedals">
+        <button class="tc-btn tc-round" data-action="backward" aria-label="Brake / reverse">&darr;</button>
+        <button class="tc-btn tc-round tc-accel" data-action="forward" aria-label="Accelerate">&uarr;</button>
+      </div>
+    </div>
   </div>
   <script type="module" src="/src/main.js"></script>
 </body>
